@@ -5,6 +5,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 
 const AuthRoutes = require('./routes/Auth');
+const UserRoutes = require('./routes/User');
 
 // Initializing express app
 const app = express();
@@ -18,6 +19,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // Routes here
 app.use('/api/auth', AuthRoutes);
+app.use('/api/user', UserRoutes);
 
 // Handling error
 app.use((error, req, res, next) => {
