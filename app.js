@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 
 const AuthRoutes = require('./routes/Auth');
 const UserRoutes = require('./routes/User');
+const { addSockets } = require('./sockets');
 
 // Initializing express app
 const app = express();
@@ -38,7 +39,7 @@ mongoose.connect(process.env.MONGO_URL)
     })
     .then(server => {
         // Adding socket.io
-        // addSockets(server);
+        addSockets(server)
 
         // consoling result
         console.log('Connected to database and server started at port ', process.env.PORT);
