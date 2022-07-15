@@ -10,13 +10,10 @@ const addSockets = (server) => {
     });
 
     io.on("connection", (socket) => {
-        console.log(socket.id, 'connected')
         socket.on("user active", async ({ userId }) => {
             try {
-                console.log(userId, socket.id, 'joined')
                 // Checking is user already exists
                 let existingUser = await ActiveUser.findOne({ userId: userId });
-                console.log(existingUser)
 
                 // If user with this userId already exists
                 if (existingUser) {
@@ -37,7 +34,7 @@ const addSockets = (server) => {
             }
         });
 
-        socket.on("user inactive", async ({ userId }) => {
+        socket.on("user-inactive", async ({ userId }) => {
             try {
                 // Checking if there is any existing active user with the given userId
                 let existingUser = await ActiveUser.findOne({ userId: userId });
@@ -66,13 +63,12 @@ const addSockets = (server) => {
                         }
                     });
                 }
-            } catch (error) {
-                console.log(error);
+            } catch (err) {
+                console.log(err);
             }
         })
 
         socket.on('disconnect', async () => {
-            console.log(socket.id, 'disconnected')
             try {
                 // Checking if there is any existing active user with the given socketId
                 let existingUser = await ActiveUser.findOne({ socketId: socket.id });
